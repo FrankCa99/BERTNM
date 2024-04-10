@@ -1,26 +1,33 @@
 #include <FastLED.h>
-#include "Controller.h"
-// #include "Animator.h"
+#include "Animator.h"
 
 #define CONTROL_PIN 4
 #define NUM_LED 256
 
 CRGB leds[NUM_LED];
 
-Controller controller(leds);
+Animator animator1;
+Animator animator2;
+
+CRGB red;
+CRGB blue;
 
 void setup() {
   Serial.begin(115200);
   FastLED.addLeds<WS2812, CONTROL_PIN, GRB>(leds, NUM_LED);
+  animator1.begin(leds, 0, 15);
+  animator2.begin(leds, 32, 47);
+
+  red = CRGB::Red;
+  blue = CRGB::Blue;
 }
 
 void loop(){
-  FastLED.setBrightness(50);
+  FastLED.setBrightness(10);
 
-  // animate individual letters
-  controller.animate_letter();
-  // controller.animate_letter(type, letter, speed);
-  // controller.animate_letter(type, letter, speed);
-  //animate all letters at once
-  // controller.animate_all(type, speed);
+  animator1.chasing(2, red);
+  animator2.chasing(5, blue);
+
+  delay(50);
+  FastLED.show();
 }

@@ -4,15 +4,28 @@
 #include "Animator.h"
 
 Animator::Animator(){
-  
-}
-void set_led_array(CRGB* _led_array){
-  led_array = _led_array;
-}
 
-void Animator::fill_solid(Letter _letter){
-  for(int i = _letter.get_start(); i < _letter.get_end(); i++){
-      led_array[i] = CRGB::Red;
+}
+void Animator::begin(CRGB *_led_array, int _start, int _end){
+  led_array = _led_array;
+  start = _start;
+  end = _end;
+  
+  head = start;
+  tail = NULL;
+}
+void Animator::chasing(int len, CRGB _color){
+
+  led_array[head] = _color; //turn on front led
+  led_array[head - len] = CRGB::Black; // turn off back led
+
+  if(head >= end) {
+    tail = head - len; // save prev back led
+    head = start;
+  } else head ++;
+
+  if(tail != NULL){
+    led_array[tail] = CRGB::Black; // turn off back led
+    tail++;
   }
-  FastLED.show();
 }
