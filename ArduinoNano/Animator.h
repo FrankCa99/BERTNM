@@ -14,6 +14,7 @@ class Animator{
     void chasing(int len, CRGB _color);
     Animator();
     void begin(CRGB* _led_array, int _start, int _end);
+    void fill(CRGB _color);
 };
 
 #endif

@@ -29,3 +29,8 @@ void Animator::chasing(int len, CRGB _color){
     tail++;
   }
 }
+void Animator::fill(CRGB _color){
+  for(int i = start; i < end; i++){
+    led_array[i] = _color;
+  }
+}
